@@ -1,0 +1,4 @@
+login_host_name: db-dev.kithusdairy.fun
+db_password: ExpenseApp1
+login_user: root
+DB_HOST: db-dev.kithusdairy.fun
