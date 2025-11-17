@@ -1,0 +1,3 @@
+BACKEND_API_URL: backend.kithusdairy.fun
+app_location: /usr/share/nginx/html
+component: frontend

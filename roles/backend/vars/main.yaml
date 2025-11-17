@@ -1,0 +1,6 @@
+login_host_name: db.kithusdairy.fun
+db_password: ExpenseApp@1
+login_user: root
+DB_HOST: db.kithusdairy.fun
+app_location: /app
+component: backed

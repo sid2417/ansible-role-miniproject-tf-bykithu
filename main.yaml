@@ -1,0 +1,20 @@
+- name: installing "{{ component }}" server in db.kithusdairy.fun
+  hosts: "{{ component }}"
+  become: yes
+  roles:
+  - "{{ component }}"
+
+
+### This method is using component in ( main.yaml ) file
+## this is another method using component you passing arguments while executing your tasks
+#( ansible-playbook main.yaml -e component=db )
+#( ansible-playbook main.yaml -e component=backend )
+#( ansible-playbook main.yaml -e component=frontend )
+
+
+### This method is individual files like ( db.yaml ; backedn.yaml ; frontend.yaml )
+## previously we calling like this 
+#( ansible-playbook db.yaml )
+#( ansible-playbook backend.yaml )
+#( ansible-playbook frontend.yaml )
+

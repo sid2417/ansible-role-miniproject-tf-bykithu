@@ -1,0 +1,61 @@
+- name: installing nginx
+  ansible.builtin.dnf:
+    name: nginx
+    state: present
+- name: enabling nginx
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: we are using common code
+  ansible.builtin.import_role:
+    name: common  ### here you meniton the common folder name ## the folder name you mention whatever you want, ( common ) is not a mandatory name
+    tasks_from: app-pre-requisite ## (.yaml ) not required ## you mention file name where code is exist
+
+
+# WE REMOVING THIS CODE BECOZ WE KEEP THIS CODE IN "common" folder
+
+# - name: removing html folder
+#   ansible.builtin.file:
+#     path: /usr/share/nginx/html
+#     state: absent
+
+# - name: creating html folder
+#   ansible.builtin.file:
+#     path: /usr/share/nginx/html
+#     state: directory
+
+##-----------------------------------------------------
+  
+# - name: downloading frontend content
+#   ansible.builtin.get_url:
+#     url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip
+#     dest: /tmp/frontend.zip
+
+# - name: unzip the frontend content
+#   ansible.builtin.unarchive:
+#     src: /tmp/frontend.zip
+#     dest: /usr/share/nginx/html
+#     remote_src: yes
+
+##-----------------------------------------------------
+
+# - name: download and extract frontend code
+#   ansible.builtin.unarchive:
+#     src: https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip
+#     dest: /usr/share/nginx/html
+#     remote_src: yes
+
+- name: copy the file Nginx Reverse Proxy Configuration
+  ansible.builtin.template:
+    src: expense.conf.j2
+    dest: /etc/nginx/default.d/expense.conf.j2
+  notify:  ## this is notifying while any changes happens in configuration file 
+  - restart nginx
+  
+
+# - name: starting nginx server
+#   ansible.builtin.service:
+#     name: nginx
+#     state: restarted

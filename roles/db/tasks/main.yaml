@@ -1,0 +1,42 @@
+- name: installing mysql server
+  ansible.builtin.dnf:
+    name: mysql-server
+    state: latest  ## installed
+
+- name: starting and enabling the mysql server
+  ansible.builtin.service:
+    name: mysqld
+    state: started
+    enabled: yes 
+
+- name: installing python mysql dependensies
+  ansible.builtin.pip:
+    name:
+    - PyMySQL
+    - cryptography  ## this is for enter our passwords in commandline
+    executable: pip3.9 # pip3.11 if python version is 3.11  3.9.18
+
+
+- name: checking root password is setup or not
+  community.mysql.mysql_info: ## community.mysql.mysql_info ---> Gather info about MySQL server ### community.mysql.mysql_db ---> Manage databases (create/delete/import/export)
+    login_user: root
+    login_password: "{{mysql_root_password}}"
+    login_host: "{{ my_host_name }}"
+    filter: version
+  ignore_errors: yes
+  register: mysql_server_info_output
+
+- name: printing mysql output 
+  ansible.builtin.debug:
+    msg: " Output : {{ mysql_server_info_output }}"
+
+- name: now we are setting up mysql root password
+  ansible.builtin.command: "mysql_secure_installation --set-root-pass {{mysql_root_password}}" ## ExpenseApp@1
+  when: mysql_server_info_output.failed is true  
+  ### here (is) --> for truth testing 
+  ## Ansible uses the Jinja2 template engine, which has its own logic keywords — similar to Python
+  # don't give {{ }} in when condition 
+  ## true always small case while in condition, don't meniton True or TRUE like this
+
+
+
