@@ -1,7 +1,7 @@
 - name: installing "{{ component }}" server in db.kithusdairy.fun
   hosts: all 
   connection: local
-  var_files:
+  vars_files:
   - "variables-{{ env }}.yaml"
   become: yes
   roles:
