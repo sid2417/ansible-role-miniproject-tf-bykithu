@@ -1,2 +1,3 @@
-my_host_name: "db.kithusdairy.fun"
-mysql_root_password: "ExpenseApp@1"
+# my_host_name: "db.kithusdairy.fun"
+login_host: "db.kithusdairy.fun"
+# mysql_root_password: "ExpenseApp@1"

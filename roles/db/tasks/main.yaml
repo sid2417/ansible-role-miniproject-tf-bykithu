@@ -16,12 +16,12 @@
     - cryptography  ## this is for enter our passwords in commandline
     executable: pip3.9 # pip3.11 if python version is 3.11  3.9.18
 
-
-- name: checking root password is setup or not
+# checking root password is setup or not
+- name: check DB connection
   community.mysql.mysql_info: ## community.mysql.mysql_info ---> Gather info about MySQL server ### community.mysql.mysql_db ---> Manage databases (create/delete/import/export)
     login_user: root
     login_password: "{{mysql_root_password}}"
-    login_host: "{{ my_host_name }}"
+    login_host: "{{ login_host }}"  # my_host_name
     filter: version
   ignore_errors: yes
   register: mysql_server_info_output

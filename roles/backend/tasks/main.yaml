@@ -22,12 +22,14 @@
 #   - nodejs
 #   - mysql
 
-- name: adding user
+- name: create/adding user
   ansible.builtin.user:
     name: expense
     state: present
 
-- name: we are using common code
+- name: app-pre-requisite we are using in common code
+  tags:
+  - deployment
   ansible.builtin.import_role:
     name: common  ### here you meniton the common folder name ## the folder name you mention whatever you want, ( common ) is not a mandatory name
     tasks_from: app-pre-requisite ## (.yaml ) not required ## you mention file name where code is exist
@@ -49,6 +51,8 @@
 #     remote_src: yes  # remote_src: yes → file is already on the target server  # remote_src: no → file is on your Ansible control machine
 
 - name: install npm dependencies
+  tags: 
+  - deployment
   ansible.builtin.command: npm install ## This npm dependencies we must install in the backend/code where it is unzipped
   args:
     chdir: /app
@@ -77,14 +81,16 @@
 - name: loading/dump/import the data into the mysql
   community.mysql.mysql_db:
     login_user: "{{ login_user }}"
-    login_password: "{{ db_password }}"
-    login_host: "{{ login_host_name }}"
+    login_password: "{{ login_password }}"  # db_password
+    login_host: "{{ login_host }}"   # login_host_name
     target: /app/schema/backend.sql
     state: import
     name: all
 
 - name: start and enable backend service
+  tags: 
+  - deployment
   ansible.builtin.service:
     name: backend
-    state: started
+    state: restarted
     

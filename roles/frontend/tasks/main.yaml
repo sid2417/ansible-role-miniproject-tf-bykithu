@@ -8,7 +8,7 @@
     state: started
     enabled: yes
 
-- name: we are using common code
+- name: app-pre-requisite we are using common code
   ansible.builtin.import_role:
     name: common  ### here you meniton the common folder name ## the folder name you mention whatever you want, ( common ) is not a mandatory name
     tasks_from: app-pre-requisite ## (.yaml ) not required ## you mention file name where code is exist

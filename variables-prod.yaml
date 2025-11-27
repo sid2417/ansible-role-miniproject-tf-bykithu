@@ -1,4 +1,5 @@
-login_host_name: db-prod.kithusdairy.fun
-db_password: ExpenseApp1
 login_user: root
+login_host: db-prod.kithusdairy.fun
+login_password: ExpenseApp@1
 DB_HOST: db-prod.kithusdairy.fun
+BACKEND_API_URL: backend.app-prod.kithusdairy.fun
