@@ -93,4 +93,5 @@
   ansible.builtin.service:
     name: backend
     state: restarted
+    enabled: yes
     
